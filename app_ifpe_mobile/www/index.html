@@ -25,6 +25,7 @@
 
         <link rel="stylesheet" href="css/app.css">
         <link rel="stylesheet" type="text/css" href="css/index_main.less.css" class="main-less">
+        <link rel="stylesheet" type="text/css" href="css/index_main.less.css" class="main-less">
 
         <script src="cordova.js" id="xdkJScordova_"></script>
 
@@ -33,7 +34,7 @@
         <!-- for your event code, see README and file comments for details -->
         <script src="js/init-app.js"></script>
         <!-- for your init code, see README and file comments for details -->
-        
+
         <script src="xdk/init-dev.js"></script>
         <!-- normalizes device and document ready events, see file for details -->
         <script type="application/javascript" src="lib/jquery.min.js"></script>
@@ -46,36 +47,39 @@
 
         <div class="upage" id="mainpage">
             <div class="upage-outer">
-                <div class="uib-header header-bg container-group inner-element uib_w_1" data-uib="layout/header" data-ver="0">
+                <div class="uib-header header-bg container-group inner-element uib_w_15" data-uib="layout/header" data-ver="0">
                     <h2>IFPE App</h2>
                     <div class="widget-container wrapping-col single-centered"></div>
                     <div class="widget-container content-area horiz-area wrapping-col left"></div>
                     <div class="widget-container content-area horiz-area wrapping-col right">
-                        <button v-on:click="sync" class="btn widget uib_w_14 d-margins btn-primary" data-uib="twitter%20bootstrap/button" data-ver="1" id="btn_refresh"><i class="glyphicon glyphicon-refresh" data-position="icon only"></i>
+                        <button class="btn widget uib_w_16 d-margins btn-primary" data-uib="twitter%20bootstrap/button" data-ver="1"><i class="glyphicon glyphicon-refresh button-icon-left" data-position="left"></i>
                         </button>
                     </div>
                 </div>
 
-                <div class="uib-footer uib-footer-fixed footer-bg container-group inner-element uib_w_7" data-uib="layout/footer" data-ver="0">
+                <div class="upage-content ac0" id="page_77_44">
+                    <div class="upage-outer">
+
+                    </div>
+                    <div class="list-group widget uib_w_12 d-margins" data-uib="twitter%20bootstrap/list_group" data-ver="1" id="list_posts">
+                        <a v-for="post in posts" class="list-group-item allow-badge widget uib_w_13" data-uib="twitter%20bootstrap/list_item" data-ver="1">
+                            <h4 class="list-group-item-heading">{{post.title}}</h4>
+                            <p class="list-group-item-text">{{post.body}}</p>
+                        </a>
+                    </div>
+
+                </div>
+
+                <div class="uib-footer uib-footer-fixed footer-bg container-group inner-element uib_w_14" data-uib="layout/footer" data-ver="0">
                     <h2></h2>
                     <div class="widget-container wrapping-col single-centered">
 
-                        <div class="btn-group uib-bs-flex widget uib_w_8 d-margins" data-uib="twitter%20bootstrap/button_group" data-ver="1">
-                            <button class="btn widget uib_w_9 btn-default" data-uib="twitter%20bootstrap/button" data-ver="1"><i class="glyphicon glyphicon-chevron-left button-icon-left" data-position="left"></i>Voltar</button>
-                            <button class="btn widget uib_w_10 btn-default" data-uib="twitter%20bootstrap/button" data-ver="1"><i class="glyphicon glyphicon-home button-icon-left" data-position="left"></i>Home</button>
-                            <button class="btn widget uib_w_11 btn-default" data-uib="twitter%20bootstrap/button" data-ver="1"><i class="glyphicon glyphicon-info-sign button-icon-left" data-position="left"></i>Info</button>
-                        </div>
                     </div>
                     <div class="widget-container content-area horiz-area wrapping-col left"></div>
                     <div class="widget-container content-area horiz-area wrapping-col right"></div>
                 </div>
             </div>
-            <div class="list-group widget uib_w_12 d-margins" data-uib="twitter%20bootstrap/list_group" data-ver="1">
-                <a v-for="post in posts" class="list-group-item allow-badge widget uib_w_13" data-uib="twitter%20bootstrap/list_item" data-ver="1">
-                    <h4 class="list-group-item-heading">{{post.title}}</h4>
-                    <p class="list-group-item-text">{{post.body}}</p>
-                </a>
-            </div>
+
         </div>
     </body>
 
