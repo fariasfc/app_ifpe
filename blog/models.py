@@ -27,3 +27,10 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+class Profile(models.Model):
+    user = models.ForeignKey(User)
+    tags = ManyToManyField(Tag)
+
+    def __str__(self):
+        return self.user.username + " tags: " + str([str(tag) for tag in self.tags])
