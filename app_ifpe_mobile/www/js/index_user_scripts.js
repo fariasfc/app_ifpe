@@ -25,54 +25,16 @@
     
     
         /* button  #btn_go_feed */
+     
+    
+        /* button  #btn_home */
     
     
-        /* button  Button */
-    $(document).on("click", ".uib_w_22", function(evt)
+        /* button  #btn_home */
+    $(document).on("click", "#btn_home", function(evt)
     {
          /*global activate_subpage */
-         activate_subpage("#test_subpage"); 
-         return false;
-    });
-    
-        /* button  #btn_go_feed */
-    $(document).on("click", "#btn_go_feed", function(evt)
-    {
-         /*global activate_page */
-         activate_page("#feed_news"); 
-         return false;
-    });
-    
-        /* button  #btn_back */
-    $(document).on("click", "#btn_back", function(evt)
-    {
-        $('#detail_post').addClass('hidden');
-
-        /* your code goes here */ 
-         return false;
-    });
-    
-        /* button  #btn_feed */
-    $(document).on("click", "#btn_feed", function(evt)
-    {
-         /*global activate_page */
-         activate_page("#feed_news"); 
-         return false;
-    });
-    
-        /* button  Button */
-    $(document).on("click", ".uib_w_35", function(evt)
-    {
-         /*global activate_page */
-         activate_page("#mainpage"); 
-         return false;
-    });
-    
-        /* button  #btn_back */
-    $(document).on("click", "#btn_back", function(evt)
-    {
-         /*global activate_page */
-         activate_page("#mainpage"); 
+         activate_subpage("#page_16_89"); 
          return false;
     });
     

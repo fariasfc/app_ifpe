@@ -38,8 +38,8 @@ function onDeviceReady(){
                 this.posts = JSON.parse(localStorage.getItem('posts'));
             },
             
-            read_post:function(index){
-                self.post_index = index;
+            read_post:function(i){
+                this.post_index = i;
                 activate_subpage("#feed_detail");
             },
             

@@ -102,7 +102,7 @@
                         <div class="col uib_col_8 col-0_12-12" data-uib="layout/col" data-ver="0">
                             <div class="widget-container content-area vertical-col">
                                 <div class="list-group widget uib_w_42 d-margins" data-uib="twitter%20bootstrap/list_group" data-ver="1">
-                                    <a v-on:click="read_post($index)" v-for="post in posts" class="list-group-item allow-badge widget uib_w_43" data-uib="twitter%20bootstrap/list_item" data-ver="1">
+                                    <a v-for="post in posts" v-on:click="read_post($index)" class="list-group-item allow-badge widget uib_w_43" data-uib="twitter%20bootstrap/list_item" data-ver="1">
                                         <h4 class="list-group-item-heading">{{post.title}}</h4>
                                         <p class="list-group-item-text">{{post.body}}</p>
                                     </a>
@@ -134,14 +134,10 @@
                                         <div class="widget-container">
                                             <h3 class="panel-title">{{posts[post_index].title}}</h3>
                                         </div>
-                                        <h1 class="panel-body">{{posts[post_index].body}}</h1>
                                     </div>
-                                    <div class="col uib_col_10 single-col" data-uib="layout/col" data-ver="0">
-                                        <div class="widget-container content-area vertical-col">
-                                            <span class="uib_shim"></span>
-                                        </div>
+                                    <div class="panel-body">
+                                            {{posts[post_index].body}}
                                     </div>
-
                                 </div>
                                 <span class="uib_shim"></span>
                             </div>
