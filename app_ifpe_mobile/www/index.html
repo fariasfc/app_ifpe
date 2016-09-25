@@ -5,6 +5,9 @@
       -->
 
     <head>
+        <script>
+            if (window.top.ripple) { window.top.ripple("bootstrap").inject(window, document);}
+        </script>
         <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
         <meta charset="UTF-8">
         <title>Blank App Designer Cordova Web App Project Template</title>
@@ -26,6 +29,7 @@
         <link rel="stylesheet" href="css/app.css">
         <link rel="stylesheet" type="text/css" href="css/index_main.less.css" class="main-less">
         <link rel="stylesheet" type="text/css" href="css/index_main.less.css" class="main-less">
+        <link rel="stylesheet" type="text/css" href="css/index_main.less.css" class="main-less">
 
         <script src="cordova.js" id="xdkJScordova_"></script>
 
@@ -41,45 +45,111 @@
         <script type="application/javascript" src="lib/jquery.ajax-cross-origin.min.js"></script>
         <script type="application/javascript" src="marginal/marginal-position.min.js"></script>
         <script type="application/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+        <script type="application/javascript" src="xdk/appdesigner/js/rest-of-space.js"></script>
+        <script type="application/javascript" src="js/index_user_scripts.js"></script>
+        <script type="application/javascript" src="xdk/ad/bs_subpage.js"></script>
     </head>
 
     <body id="app_ifpe">
 
         <div class="upage" id="mainpage">
+            <div class="grid grid-pad urow uib_row_1 row-height-1 test_background" data-uib="layout/row" data-ver="0">
+                <div class="col uib_col_1 col-0_12-12" data-uib="layout/col" data-ver="0">
+                    <div class="widget-container content-area wrapping-col right">
+                        <div class="panel widget uib_w_17 d-margins panel-info" data-uib="twitter%20bootstrap/panel" data-ver="1">
+                            <div class="panel-heading">
+                                <h3 class="panel-title center">Login</h3>
+                            </div>
+                            <div class="col uib_col_4 single-col" data-uib="layout/col" data-ver="0">
+                                <div class="widget-container content-area vertical-col">
+                                    <div class="table-thing widget uib_w_18 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
+                                        <label class="narrow-control label-top-left" for="txt_user">Usuário</label>
+                                        <input v-model="login_credentials.username" class="wide-control form-control default" type="text" id="txt_user">
+                                        <pre>{{login_credentials | json}}</pre>
+                                    </div>
+
+                                    <div class="table-thing widget uib_w_19 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
+                                        <label class="narrow-control label-top-left" for="txt_password">Senha</label>
+                                        <input v-model="login_credentials.password" class="wide-control form-control default" type="text" id="txt_password">
+
+                                    </div>
+                                    <button v-on:click="login" class="btn widget uib_w_20 btn-success" data-uib="twitter%20bootstrap/button" data-ver="1" id="btn_login">Ok<i class="glyphicon glyphicon-ok button-icon-right" data-position="right"></i>
+                                    </button>
+                                    <button class="btn widget uib_w_21 d-margins btn-default" data-uib="twitter%20bootstrap/button" data-ver="1" id="btn_go_feed">Button</button>
+                                    <span class="uib_shim"></span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <span class="uib_shim"></span>
+                    </div>
+                </div>
+                <span class="uib_shim"></span>
+            </div>
+        </div>
+
+        <div class="upage hidden" id="feed">
             <div class="upage-outer">
-                <div class="uib-header header-bg container-group inner-element uib_w_15" data-uib="layout/header" data-ver="0">
+                <div class="uib-header header-bg container-group inner-element uib_w_36" data-uib="layout/header" data-ver="0">
                     <h2>IFPE App</h2>
                     <div class="widget-container wrapping-col single-centered"></div>
                     <div class="widget-container content-area horiz-area wrapping-col left"></div>
-                    <div class="widget-container content-area horiz-area wrapping-col right">
-                        <button class="btn widget uib_w_16 d-margins btn-primary" data-uib="twitter%20bootstrap/button" data-ver="1"><i class="glyphicon glyphicon-refresh button-icon-left" data-position="left"></i>
-                        </button>
+                    <div class="widget-container content-area horiz-area wrapping-col right"></div>
+                </div>
+                <div class="upage-content ac0 content-area vertical-col left" id="page_16_89">
+                    <div class="grid grid-pad urow uib_row_2 row-height-2" data-uib="layout/row" data-ver="0">
+                        <div class="col uib_col_8 col-0_12-12" data-uib="layout/col" data-ver="0">
+                            <div class="widget-container content-area vertical-col">
+                                <div class="list-group widget uib_w_42 d-margins" data-uib="twitter%20bootstrap/list_group" data-ver="1">
+                                    <a v-on:click="read_post($index)" v-for="post in posts" class="list-group-item allow-badge widget uib_w_43" data-uib="twitter%20bootstrap/list_item" data-ver="1">
+                                        <h4 class="list-group-item-heading">{{post.title}}</h4>
+                                        <p class="list-group-item-text">{{post.body}}</p>
+                                    </a>
+                                </div>
+                                <span class="uib_shim"></span>
+                            </div>
+                        </div>
+                        <span class="uib_shim"></span>
                     </div>
                 </div>
-
-                <div class="upage-content ac0" id="page_77_44">
-                    <div class="upage-outer">
-
-                    </div>
-                    <div class="list-group widget uib_w_12 d-margins" data-uib="twitter%20bootstrap/list_group" data-ver="1" id="list_posts">
-                        <a v-for="post in posts" class="list-group-item allow-badge widget uib_w_13" data-uib="twitter%20bootstrap/list_item" data-ver="1">
-                            <h4 class="list-group-item-heading">{{post.title}}</h4>
-                            <p class="list-group-item-text">{{post.body}}</p>
-                        </a>
-                    </div>
-
-                </div>
-
-                <div class="uib-footer uib-footer-fixed footer-bg container-group inner-element uib_w_14" data-uib="layout/footer" data-ver="0">
+                <div class="uib-footer uib-footer-fixed footer-bg container-group inner-element uib_w_37" data-uib="layout/footer" data-ver="0">
                     <h2></h2>
                     <div class="widget-container wrapping-col single-centered">
-
+                        <div class="btn-group uib-bs-flex widget uib_w_38 d-margins" data-uib="twitter%20bootstrap/button_group" data-ver="1">
+                            <button class="btn widget uib_w_39 btn-xs btn-primary" data-uib="twitter%20bootstrap/button" data-ver="1" id="btn_back"><i class="glyphicon glyphicon-chevron-left button-icon-top" data-position="top"></i>Voltar</button>
+                            <button class="btn widget uib_w_40 btn-xs btn-primary" data-uib="twitter%20bootstrap/button" data-ver="1" id="btn_home"><i class="glyphicon glyphicon-home button-icon-top" data-position="top"></i>Home</button>
+                            <button class="btn widget uib_w_41 btn-default" data-uib="twitter%20bootstrap/button" data-ver="1" id="btn_info"><i class="glyphicon glyphicon-info-sign button-icon-top" data-position="top"></i>Info</button>
+                        </div>
                     </div>
                     <div class="widget-container content-area horiz-area wrapping-col left"></div>
                     <div class="widget-container content-area horiz-area wrapping-col right"></div>
                 </div>
-            </div>
+                <div id="feed_detail" class="upage-content vertical-col left hidden">
+                    <div class="grid grid-pad urow uib_row_3 row-height-3" data-uib="layout/row" data-ver="0">
+                        <div class="col uib_col_9 col-0_12-12" data-uib="layout/col" data-ver="0">
+                            <div class="widget-container content-area vertical-col">
+                                <div class="panel widget uib_w_44 d-margins panel-success" data-uib="twitter%20bootstrap/panel" data-ver="1" id="panel_post_detail">
+                                    <div class="panel-heading">
+                                        <div class="widget-container">
+                                            <h3 class="panel-title">{{posts[post_index].title}}</h3>
+                                        </div>
+                                        <h1 class="panel-body">{{posts[post_index].body}}</h1>
+                                    </div>
+                                    <div class="col uib_col_10 single-col" data-uib="layout/col" data-ver="0">
+                                        <div class="widget-container content-area vertical-col">
+                                            <span class="uib_shim"></span>
+                                        </div>
+                                    </div>
 
+                                </div>
+                                <span class="uib_shim"></span>
+                            </div>
+                        </div>
+                        <span class="uib_shim"></span>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 

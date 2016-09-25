@@ -7,8 +7,11 @@ function onDeviceReady(){
     var vm = new Vue({
         el: "#app_ifpe",
         data:{
+            url: 'http://localhost:8888/',
+            post_index: 0,
             token: '',
-            posts: []
+            posts: [],
+            login_credentials: {"username": "", "password":"", "email":""}
         },
         
         methods:{
@@ -16,7 +19,7 @@ function onDeviceReady(){
                 var self = this;
                 $.ajax({
                    dataType: 'json',
-                    url: 'http://localhost:8888/post?tags=redes-de-computadores&tags=informatica-basica',
+                    url: self.url + 'post?tags=redes-de-computadores&tags=informatica-basica',
                     beforeSend: function(xhr, settings) { 
                         xhr.setRequestHeader('Authorization','Token ' + self.token); 
                     },
@@ -35,30 +38,35 @@ function onDeviceReady(){
                 this.posts = JSON.parse(localStorage.getItem('posts'));
             },
             
+            read_post:function(index){
+                self.post_index = index;
+                activate_subpage("#feed_detail");
+            },
+            
             login:function(){
                 var self = this;
-                var login_credentials = {
-                    "username": "felipe.farias",
-                    "email": "",
-                    "password": "qwer1234"
-                };
-                
-                $.ajax({
+                self.token = localStorage.getItem('token');
+                if(self.token){
+                    this.sync();
+                    activate_page("#feed");
+                } else {
+                    $.ajax({
 //                    dataType: 'json',
-                    url: 'http://localhost:8888/rest-auth/login/',
+                    url: self.url + 'rest-auth/login/',
                     async: false,
                     contentType: "application/json",
                     type: 'POST',
-                    data: JSON.stringify(login_credentials),
+                    data: JSON.stringify(self.login_credentials),
                     success: function(data){
-                        self.token = data['key'];
-                        self.setToken(data['key']);
+                        localStorage.setItem('token', data['key']);
                         console.log(self.token);
+                        self.login();
                     },
                     error: function(data){
                         alert(JSON.stringify(data));
                     }
-                });
+                });    
+                }
             },
             
             

@@ -390,14 +390,6 @@ body#afui .splt {
     background-attachment: scroll;
   }
 }
-@media all {
-  .footer-bg {
-    background-color: #666666;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: scroll;
-  }
-}
 .button-icon-top {
   display: block;
   margin: auto;
@@ -412,19 +404,80 @@ body#afui .splt {
 .button-icon-right {
   float: right;
 }
+.btn-group .d-margins {
+  margin: 0;
+}
+.uib-bs-flex:not(.btn-group-vertical) {
+  display: -webkit-box;
+  -webkit-box-align: center;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -o-flex;
+  display: flex;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  -o-align-items: center;
+  align-items: center;
+}
+.uib-bs-flex:not(.btn-group-vertical) > .widget {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 auto;
+  -moz-flex: 1 auto;
+  -ms-flex: 1 auto;
+  -o-flex: 1 auto;
+  flex: 1 auto;
+}
+.uib_row_2:not(.cright) > .col {
+  padding-right: 20px;
+}
+.uib_row_2.cright > .col {
+  padding-left: 20px;
+}
 @media all {
-  .wrapping-col > .d-margins,
-  .wrapping-col > .afScrollPanel > .d-margins {
-    margin-left: 6px;
-    margin-right: 6px;
+  .col-0_12-12 {
+    width: auto;
+    float: none !important;
   }
-  .wrapping-col > .d-margins,
-  .wrapping-col > .afScrollPanel > .d-margins {
-    margin-left: 6px;
-    margin-right: 6px;
+  .urow:not(.cright) > .col-0_12-12 {
+    padding-right: 0px !important;
   }
-  .d-margins {
-    margin-top: 0px;
-    margin-bottom: 0px;
+  .urow.cright > .col-0_12-12 {
+    padding-left: 0px !important;
+  }
+}
+@media all and (min-width: 0px) {
+  .row-height-2 > .col > .content-area {
+    min-height: 100px;
+  }
+}
+.allow-badge > .badge.glyphicon {
+  display: inline-block;
+}
+.list-group .d-margins {
+  margin: 0;
+}
+.uib_row_3:not(.cright) > .col {
+  padding-right: 20px;
+}
+.uib_row_3.cright > .col {
+  padding-left: 20px;
+}
+@media all {
+  .col-0_12-12 {
+    width: auto;
+    float: none !important;
+  }
+  .urow:not(.cright) > .col-0_12-12 {
+    padding-right: 0px !important;
+  }
+  .urow.cright > .col-0_12-12 {
+    padding-left: 0px !important;
+  }
+}
+@media all and (min-width: 0px) {
+  .row-height-3 > .col > .content-area {
+    min-height: 100px;
   }
 }
