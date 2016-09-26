@@ -52,7 +52,7 @@
 
     <body id="app_ifpe">
 
-        <div class="upage" id="mainpage">
+        <div class="upage" id="login">
             <div class="grid grid-pad urow uib_row_1 row-height-1 test_background" data-uib="layout/row" data-ver="0">
                 <div class="col uib_col_1 col-0_12-12" data-uib="layout/col" data-ver="0">
                     <div class="widget-container content-area wrapping-col right">
@@ -89,7 +89,7 @@
             </div>
         </div>
 
-        <div class="upage hidden" id="feed">
+        <div class="upage hidden" id="main">
             <div class="upage-outer">
                 <div class="uib-header header-bg container-group inner-element uib_w_36" data-uib="layout/header" data-ver="0">
                     <h2>IFPE App</h2>
@@ -117,9 +117,9 @@
                     <h2></h2>
                     <div class="widget-container wrapping-col single-centered">
                         <div class="btn-group uib-bs-flex widget uib_w_38 d-margins" data-uib="twitter%20bootstrap/button_group" data-ver="1">
-                            <button class="btn widget uib_w_39 btn-xs btn-primary" data-uib="twitter%20bootstrap/button" data-ver="1" id="btn_back"><i class="glyphicon glyphicon-chevron-left button-icon-top" data-position="top"></i>Voltar</button>
-                            <button class="btn widget uib_w_40 btn-xs btn-primary" data-uib="twitter%20bootstrap/button" data-ver="1" id="btn_home"><i class="glyphicon glyphicon-home button-icon-top" data-position="top"></i>Home</button>
-                            <button class="btn widget uib_w_41 btn-default" data-uib="twitter%20bootstrap/button" data-ver="1" id="btn_info"><i class="glyphicon glyphicon-info-sign button-icon-top" data-position="top"></i>Info</button>
+
+                            <button class="btn widget uib_w_40 btn-xs btn-success" data-uib="twitter%20bootstrap/button" data-ver="1" id="btn_feed"><i class="glyphicon glyphicon-home button-icon-top" data-position="top"></i>Notícias</button>
+                            <button class="btn widget uib_w_41 btn-xs btn-success" data-uib="twitter%20bootstrap/button" data-ver="1" id="btn_config"><i class="glyphicon glyphicon-cog button-icon-top" data-position="top"></i>Ajustes</button>
                         </div>
                     </div>
                     <div class="widget-container content-area horiz-area wrapping-col left"></div>
@@ -136,7 +136,7 @@
                                         </div>
                                     </div>
                                     <div class="panel-body">
-                                            {{posts[post_index].body}}
+                                        {{posts[post_index].body}}
                                     </div>
                                 </div>
                                 <span class="uib_shim"></span>
@@ -147,6 +147,7 @@
                 </div>
             </div>
         </div>
+        <div class="upage vertical-col left hidden" id="user_detail"></div>
     </body>
 
 </html>

@@ -21,6 +21,7 @@ from rest_auth import urls
 
 router = DefaultRouter()
 router.register(r'post', views.PostViewSet)
+router.register(r'profile', views.ProfileViewSet)
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls), name='admin-site'),

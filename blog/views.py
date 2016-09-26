@@ -11,8 +11,8 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 
-from blog.models import Post
-from blog.serializers import PostSerializer
+from blog.models import Post, Profile
+from blog.serializers import PostSerializer, ProfileSerializer
 import json
 from django.core import serializers
 
@@ -86,6 +86,16 @@ def get_posts_by_tags(request):
             Response("Malformed data!")
         return Response("Erro!")
 
+class ProfileViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = (IsAuthenticated,)
+
+    serializer_class = ProfileSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+
+    def get_queryset(self):
+        queryset = Profile.objects.all()#.filter(user__exact=self.request.user)
+        return queryset
+
 # @permission_required(views.IsAuthenticated)
 class PostViewSet(viewsets.ReadOnlyModelViewSet):
     '''
@@ -102,7 +112,3 @@ class PostViewSet(viewsets.ReadOnlyModelViewSet):
         tags = self.request.query_params.getlist('tags')
         posts = Post.objects.filter(tags__name__in=tags).distinct()
         return posts
-
-
-
-
