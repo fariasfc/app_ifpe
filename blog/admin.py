@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 from django import forms
-from blog.models import Post, Tag
+from blog.models import Post, Tag, Profile
 
 
 class PostForm(forms.ModelForm):
@@ -33,3 +33,4 @@ class PostAdmin(admin.ModelAdmin):
 
 admin.site.register(Post, PostAdmin)
 admin.site.register(Tag)
+admin.site.register(Profile)

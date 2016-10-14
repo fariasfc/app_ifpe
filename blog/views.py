@@ -11,8 +11,8 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 
-from blog.models import Post, Profile
-from blog.serializers import PostSerializer, ProfileSerializer
+from blog.models import Post, Profile, Tag
+from blog.serializers import PostSerializer, ProfileSerializer, TagsSerializer
 import json
 from django.core import serializers
 
@@ -86,15 +86,29 @@ def get_posts_by_tags(request):
             Response("Malformed data!")
         return Response("Erro!")
 
-class ProfileViewSet(viewsets.ReadOnlyModelViewSet):
+class ProfileViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
 
+    queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
     filter_backends = (filters.DjangoFilterBackend,)
+    lookup_field = 'user__username'
 
     def get_queryset(self):
-        queryset = Profile.objects.all()#.filter(user__exact=self.request.user)
+
+        queryset = Profile.objects.all().filter(user__exact=self.request.user).prefetch_related()
         return queryset
+
+    def partial_update(self, request, *args, **kwargs):
+        instance = self.get_object()
+
+        tags = Tag.objects.all()
+        data = {'tags':[tag.pk for tag in tags]}
+        serializer = ProfileSerializer(instance, data=data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+        # print("foi!")
+
 
 # @permission_required(views.IsAuthenticated)
 class PostViewSet(viewsets.ReadOnlyModelViewSet):
@@ -112,3 +126,16 @@ class PostViewSet(viewsets.ReadOnlyModelViewSet):
         tags = self.request.query_params.getlist('tags')
         posts = Post.objects.filter(tags__name__in=tags).distinct()
         return posts
+
+class TagViewSet(viewsets.ReadOnlyModelViewSet):
+    # permission_classes = (IsAuthenticated,)
+
+    queryset = Tag.objects.all()
+    serializer_class = TagsSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+
+
+
+    def get_queryset(self):
+        tags = Tag.objects.all()
+        return tags

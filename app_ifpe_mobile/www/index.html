@@ -49,6 +49,8 @@
         <script type="application/javascript" src="js/index_user_scripts.js"></script>
         <script type="application/javascript" src="xdk/ad/bs_subpage.js"></script>
     </head>
+    
+    
 
     <body id="app_ifpe">
 
@@ -63,13 +65,13 @@
                             <div class="col uib_col_4 single-col" data-uib="layout/col" data-ver="0">
                                 <div class="widget-container content-area vertical-col">
                                     <div class="table-thing widget uib_w_18 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
-                                        <label class="narrow-control label-top-left" for="txt_user">Usuário</label>
+                                        <label class="narrow-control label-top-left" for="txt_user">Usuario</label>
                                         <input v-model="login_credentials.username" class="wide-control form-control default" type="text" id="txt_user">
                                         <pre>{{login_credentials | json}}</pre>
                                     </div>
 
                                     <div class="table-thing widget uib_w_19 d-margins" data-uib="twitter%20bootstrap/input" data-ver="1">
-                                        <label class="narrow-control label-top-left" for="txt_password">Senha</label>
+                                        <label class="narrow-control label-top-left" for="txt_user">Senha</label>
                                         <input v-model="login_credentials.password" class="wide-control form-control default" type="text" id="txt_password">
 
                                     </div>
@@ -118,8 +120,8 @@
                     <div class="widget-container wrapping-col single-centered">
                         <div class="btn-group uib-bs-flex widget uib_w_38 d-margins" data-uib="twitter%20bootstrap/button_group" data-ver="1">
 
-                            <button class="btn widget uib_w_40 btn-xs btn-success" data-uib="twitter%20bootstrap/button" data-ver="1" id="btn_feed"><i class="glyphicon glyphicon-home button-icon-top" data-position="top"></i>Notícias</button>
-                            <button class="btn widget uib_w_41 btn-xs btn-success" data-uib="twitter%20bootstrap/button" data-ver="1" id="btn_config"><i class="glyphicon glyphicon-cog button-icon-top" data-position="top"></i>Ajustes</button>
+                            <button class="btn widget uib_w_40 btn-xs btn-success" data-uib="twitter%20bootstrap/button" data-ver="1" id="btn_feed"><i class="glyphicon glyphicon-home button-icon-top" data-position="top"></i>Noticias</button>
+                            <button v-on:click="prepare_adjustments" class="btn widget uib_w_41 btn-xs btn-success" data-uib="twitter%20bootstrap/button" data-ver="1" id="btn_config"><i class="glyphicon glyphicon-cog button-icon-top" data-position="top"></i>Ajustes</button>
                         </div>
                     </div>
                     <div class="widget-container content-area horiz-area wrapping-col left"></div>
@@ -147,7 +149,40 @@
                 </div>
             </div>
         </div>
-        <div class="upage vertical-col left hidden" id="user_detail"></div>
+        <div class="upage hidden" id="user_detail">
+            <div class="upage-outer">
+                <div class="uib-header header-bg container-group inner-element uib_w_45" data-uib="layout/header" data-ver="0">
+                    <h2>Editar Perfil</h2>
+                    <div class="widget-container wrapping-col single-centered"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col left"></div>
+                    <div class="widget-container content-area horiz-area wrapping-col right"></div>
+                </div>
+                <div class="upage-content ac0 content-area vertical-col left" id="page_30_74"><span class="widget uib_w_47 d-margins label label-default" data-uib="twitter%20bootstrap/badge_and_label" data-ver="1">Tags</span>
+                    <div class="list-group widget uib_w_48 d-margins" data-uib="twitter%20bootstrap/list_group" data-ver="1">
+                        
+<!--
+                        <boxes-checks 
+                            v-for="box in boxes"
+                        >
+                        </boxes-checks>
+-->
+                       
+                        <li v-for="tag in all_tags">
+                            <input type="checkbox" class="checkbox" v-model="tag.checked">
+                            <label for="checkbox"> {{tag.name}} {{tag.checked}}</label>
+                        </li>    
+<!--
+                        <a v-for="tag in all_tags" class="list-group-item allow-badge widget uib_w_49" data-uib="twitter%20bootstrap/list_item" data-ver="1">
+                            <input type="checkbox" class="checkbox" v-model="tag.checked">
+                            <label for="jack">{{tag.name}}</label>
+                        </a>
+-->
+                        
+                    </div>
+                    <pre>{{$data | json}}</pre>
+                </div>
+            </div>
+        </div>
     </body>
 
 </html>

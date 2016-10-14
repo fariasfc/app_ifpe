@@ -22,12 +22,13 @@ from rest_auth import urls
 router = DefaultRouter()
 router.register(r'post', views.PostViewSet)
 router.register(r'profile', views.ProfileViewSet)
+router.register(r'tag', views.TagViewSet)
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls), name='admin-site'),
     url(r'^', include(router.urls)),
     # url(r'^', include('blog.urls')),
-    # url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
     url(r'^rest-auth/', include('rest_auth.urls')),
 

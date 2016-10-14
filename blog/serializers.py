@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from blog.models import Post, Profile
+from blog.models import Post, Profile, Tag
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -11,6 +11,13 @@ class PostSerializer(serializers.ModelSerializer):
         fields = ('title', 'body', 'publishing_date', 'author', 'tags')
 
 class ProfileSerializer(serializers.ModelSerializer):
+    # user = serializers.ReadOnlyField(source='user.username')
+
     class Meta:
         model = Profile
-        fields = ('user', 'tags')
+        fields = ('tags', 'notification_id')
+
+class TagsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ('id','name',)
