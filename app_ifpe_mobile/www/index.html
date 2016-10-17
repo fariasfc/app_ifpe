@@ -49,8 +49,6 @@
         <script type="application/javascript" src="js/index_user_scripts.js"></script>
         <script type="application/javascript" src="xdk/ad/bs_subpage.js"></script>
     </head>
-    
-    
 
     <body id="app_ifpe">
 
@@ -158,28 +156,30 @@
                     <div class="widget-container content-area horiz-area wrapping-col right"></div>
                 </div>
                 <div class="upage-content ac0 content-area vertical-col left" id="page_30_74"><span class="widget uib_w_47 d-margins label label-default" data-uib="twitter%20bootstrap/badge_and_label" data-ver="1">Tags</span>
-                    <div class="list-group widget uib_w_48 d-margins" data-uib="twitter%20bootstrap/list_group" data-ver="1">
-                        
-<!--
-                        <boxes-checks 
-                            v-for="box in boxes"
-                        >
-                        </boxes-checks>
--->
-                       
-                        <li v-for="tag in all_tags">
-                            <input type="checkbox" class="checkbox" v-model="tag.checked">
-                            <label for="checkbox"> {{tag.name}} {{tag.checked}}</label>
-                        </li>    
-<!--
-                        <a v-for="tag in all_tags" class="list-group-item allow-badge widget uib_w_49" data-uib="twitter%20bootstrap/list_item" data-ver="1">
-                            <input type="checkbox" class="checkbox" v-model="tag.checked">
-                            <label for="jack">{{tag.name}}</label>
+                    <div class="list-group widget uib_w_49 d-margins" data-uib="twitter%20bootstrap/list_group" data-ver="1">
+                        <a class="list-group-item allow-badge widget uib_w_50" data-uib="twitter%20bootstrap/list_item" data-ver="1">
+                            <h4 class="list-group-item-heading">Heading</h4>
+                            <p class="list-group-item-text">List item</p>
                         </a>
--->
-                        
+                        <a class="list-group-item allow-badge widget uib_w_51" data-uib="twitter%20bootstrap/list_item" data-ver="1">
+                            <h4 class="list-group-item-heading">Heading</h4>
+                            <p class="list-group-item-text">List item</p>
+                        </a>
+                        <a class="list-group-item allow-badge widget uib_w_52" data-uib="twitter%20bootstrap/list_item" data-ver="1">
+                            <h4 class="list-group-item-heading">Heading</h4>
+                            <p class="list-group-item-text">List item</p>
+                        </a>
                     </div>
-                    <pre>{{$data | json}}</pre>
+                    <li v-for="tag in all_tags">
+                        <label for="checkbox">{{tag.name}}
+                            <input type="checkbox" class="checkbox" v-model="tag.checked">
+                        </label>
+
+                        <!--                            <label for="checkbox"> {{tag.name}} {{tag.checked}}</label>-->
+                    </li>
+
+                    <!--                    <pre>{{$data | json}}</pre>-->
+                    <button v-on:click="patch_tags" class="btn widget uib_w_48 btn-default d-margins" data-uib="twitter%20bootstrap/button" data-ver="1">Salvar Tags</button>
                 </div>
             </div>
         </div>

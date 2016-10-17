@@ -87,7 +87,7 @@ def get_posts_by_tags(request):
         return Response("Erro!")
 
 class ProfileViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, )
 
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
@@ -95,18 +95,18 @@ class ProfileViewSet(viewsets.ModelViewSet):
     lookup_field = 'user__username'
 
     def get_queryset(self):
-
-        queryset = Profile.objects.all().filter(user__exact=self.request.user).prefetch_related()
+        # return super(ProfileViewSet, self).get_queryset()
+        queryset = Profile.objects.filter(user__exact=self.request.user)
         return queryset
 
-    def partial_update(self, request, *args, **kwargs):
-        instance = self.get_object()
+    # def partial_update(self, request, *args, **kwargs):
+    #     instance = self.get_object()
+    #
+    #
+    #     serializer = ProfileSerializer(instance, data=request.data, partial=True)
+    #     if serializer.is_valid():
+    #         serializer.save()
 
-        tags = Tag.objects.all()
-        data = {'tags':[tag.pk for tag in tags]}
-        serializer = ProfileSerializer(instance, data=data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
         # print("foi!")
 
 
