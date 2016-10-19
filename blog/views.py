@@ -123,8 +123,7 @@ class PostViewSet(viewsets.ReadOnlyModelViewSet):
 
     #http://127.0.0.1:8888/post/?tags=informatica-basica&tags=redes-de-computadores
     def get_queryset(self):
-        tags = self.request.query_params.getlist('tags')
-        posts = Post.objects.filter(tags__name__in=tags).distinct()
+        posts = Post.objects.filter(tags__in=self.request.user.profile.tags.select_related()).distinct()
         return posts
 
 class TagViewSet(viewsets.ReadOnlyModelViewSet):

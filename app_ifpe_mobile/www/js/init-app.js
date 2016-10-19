@@ -21,7 +21,7 @@ window.app = window.app || {} ;         // there should only be one of these...
 
 // Set to "true" if you want the console.log messages to appear.
 
-app.LOG = app.LOG || false ;
+app.LOG = app.LOG || true ;
 
 app.consoleLog = function() {           // only emits console.log messages if app.LOG != false
     if( app.LOG ) {
@@ -138,4 +138,23 @@ app.hideSplashScreen = function() {
     }
 
     app.consoleLog(fName, "exit") ;
+    
+    console.log("Initializing PushNotification...");
+    var push = PushNotification.init({ "android": {"senderID": "154417747729"}} );
+    console.log("PushNotification initialized!");
+    push.on('registration', function(data) {
+        console.log("entrou no Registration...");
+        console.log(data.registrationId);
+        alert(data.registrationId);
+        console.log(JSON.stringify(data));
+        console.log("Ja alertou no Registration");
+    });
+
+    push.on('notification', function(data) {
+       alert(data.message);
+    });
+
+    push.on('error', function(e) {
+       alert(e.message);
+    });
 } ;

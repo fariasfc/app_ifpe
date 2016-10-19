@@ -34,8 +34,10 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     tags = ManyToManyField(Tag)
     notification_id = models.CharField(max_length=50)
-    # def __str__(self):
-        # return self.user.username #+ " tags: " + str([str(tag) for tag in self.tags])
+    def __str__(self):
+        tags = self.tags.select_related()
+        return self.user.username \
+               + " - tags: " + str([str(tag) for tag in tags])
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

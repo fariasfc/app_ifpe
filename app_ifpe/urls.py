@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from push_notifications.api.rest_framework import GCMDeviceAuthorizedViewSet
 from rest_framework.routers import DefaultRouter
 from blog import views
 from rest_auth import urls
@@ -23,6 +24,7 @@ router = DefaultRouter()
 router.register(r'post', views.PostViewSet)
 router.register(r'profile', views.ProfileViewSet)
 router.register(r'tag', views.TagViewSet)
+router.register(r'device/gcm', GCMDeviceAuthorizedViewSet)
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls), name='admin-site'),

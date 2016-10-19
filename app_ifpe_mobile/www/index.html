@@ -32,9 +32,10 @@
         <link rel="stylesheet" type="text/css" href="css/index_main.less.css" class="main-less">
 
         <script src="cordova.js" id="xdkJScordova_"></script>
-
+        <script src="js/push.js"></script>
         <script src="js/vue.js"></script>
         <script src="js/app.js"></script>
+
         <!-- for your event code, see README and file comments for details -->
         <script src="js/init-app.js"></script>
         <!-- for your init code, see README and file comments for details -->
@@ -48,6 +49,7 @@
         <script type="application/javascript" src="xdk/appdesigner/js/rest-of-space.js"></script>
         <script type="application/javascript" src="js/index_user_scripts.js"></script>
         <script type="application/javascript" src="xdk/ad/bs_subpage.js"></script>
+        <script src="js/utils.js"></script>
     </head>
 
     <body id="app_ifpe">
@@ -97,14 +99,15 @@
                     <div class="widget-container content-area horiz-area wrapping-col left"></div>
                     <div class="widget-container content-area horiz-area wrapping-col right"></div>
                 </div>
-                <div class="upage-content ac0 content-area vertical-col left" id="page_16_89">
+                <div class="upage-content ac0 content-area vertical-col left" v-on: id="page_16_89">
                     <div class="grid grid-pad urow uib_row_2 row-height-2" data-uib="layout/row" data-ver="0">
                         <div class="col uib_col_8 col-0_12-12" data-uib="layout/col" data-ver="0">
                             <div class="widget-container content-area vertical-col">
                                 <div class="list-group widget uib_w_42 d-margins" data-uib="twitter%20bootstrap/list_group" data-ver="1">
                                     <a v-for="post in posts" v-on:click="read_post($index)" class="list-group-item allow-badge widget uib_w_43" data-uib="twitter%20bootstrap/list_item" data-ver="1">
                                         <h4 class="list-group-item-heading">{{post.title}}</h4>
-                                        <p class="list-group-item-text">{{post.body}}</p>
+                                        <p class="list-group-item-text">{{post.tags}}</p>
+                                        <p class="list-group-item-text">{{post.publishing_date}}</p>
                                     </a>
                                 </div>
                                 <span class="uib_shim"></span>
@@ -113,12 +116,11 @@
                         <span class="uib_shim"></span>
                     </div>
                 </div>
-                <div class="uib-footer uib-footer-fixed footer-bg container-group inner-element uib_w_37" data-uib="layout/footer" data-ver="0">
+                <div class="uib-footer uib-footer-fixed container-group inner-element uib_w_37 zero_pad" data-uib="layout/footer" data-ver="0">
                     <h2></h2>
                     <div class="widget-container wrapping-col single-centered">
-                        <div class="btn-group uib-bs-flex widget uib_w_38 d-margins" data-uib="twitter%20bootstrap/button_group" data-ver="1">
-
-                            <button class="btn widget uib_w_40 btn-xs btn-success" data-uib="twitter%20bootstrap/button" data-ver="1" id="btn_feed"><i class="glyphicon glyphicon-home button-icon-top" data-position="top"></i>Noticias</button>
+                        <div class="btn-group uib-bs-flex widget uib_w_38 fill" data-uib="twitter%20bootstrap/button_group" data-ver="1">
+                            <button v-on:click="sync" class="btn widget uib_w_40 btn-xs btn-success" data-uib="twitter%20bootstrap/button" data-ver="1" id="btn_feed"><i class="glyphicon glyphicon-home button-icon-top" data-position="top"></i>Noticias</button>
                             <button v-on:click="prepare_adjustments" class="btn widget uib_w_41 btn-xs btn-success" data-uib="twitter%20bootstrap/button" data-ver="1" id="btn_config"><i class="glyphicon glyphicon-cog button-icon-top" data-position="top"></i>Ajustes</button>
                         </div>
                     </div>
@@ -126,23 +128,15 @@
                     <div class="widget-container content-area horiz-area wrapping-col right"></div>
                 </div>
                 <div id="feed_detail" class="upage-content vertical-col left hidden">
-                    <div class="grid grid-pad urow uib_row_3 row-height-3" data-uib="layout/row" data-ver="0">
-                        <div class="col uib_col_9 col-0_12-12" data-uib="layout/col" data-ver="0">
-                            <div class="widget-container content-area vertical-col">
-                                <div class="panel widget uib_w_44 d-margins panel-success" data-uib="twitter%20bootstrap/panel" data-ver="1" id="panel_post_detail">
-                                    <div class="panel-heading">
-                                        <div class="widget-container">
-                                            <h3 class="panel-title">{{posts[post_index].title}}</h3>
-                                        </div>
-                                    </div>
-                                    <div class="panel-body">
-                                        {{posts[post_index].body}}
-                                    </div>
-                                </div>
-                                <span class="uib_shim"></span>
+                    <div class="panel widget uib_w_44 d-margins panel-success" data-uib="twitter%20bootstrap/panel" data-ver="1" id="panel_post_detail">
+                        <div class="panel-heading">
+                            <div class="widget-container">
+                                <h3 class="panel-title">{{posts[post_index].title}}</h3>
                             </div>
                         </div>
-                        <span class="uib_shim"></span>
+                        <div class="panel-body">
+                            {{posts[post_index].body}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -156,30 +150,24 @@
                     <div class="widget-container content-area horiz-area wrapping-col right"></div>
                 </div>
                 <div class="upage-content ac0 content-area vertical-col left" id="page_30_74"><span class="widget uib_w_47 d-margins label label-default" data-uib="twitter%20bootstrap/badge_and_label" data-ver="1">Tags</span>
-                    <div class="list-group widget uib_w_49 d-margins" data-uib="twitter%20bootstrap/list_group" data-ver="1">
-                        <a class="list-group-item allow-badge widget uib_w_50" data-uib="twitter%20bootstrap/list_item" data-ver="1">
-                            <h4 class="list-group-item-heading">Heading</h4>
-                            <p class="list-group-item-text">List item</p>
-                        </a>
-                        <a class="list-group-item allow-badge widget uib_w_51" data-uib="twitter%20bootstrap/list_item" data-ver="1">
-                            <h4 class="list-group-item-heading">Heading</h4>
-                            <p class="list-group-item-text">List item</p>
-                        </a>
-                        <a class="list-group-item allow-badge widget uib_w_52" data-uib="twitter%20bootstrap/list_item" data-ver="1">
-                            <h4 class="list-group-item-heading">Heading</h4>
-                            <p class="list-group-item-text">List item</p>
-                        </a>
+                    <div class="list-group">
+                        <div class="checkbox" v-for="tag in all_tags">
+                            <label class="checkbox">
+                                <input type="checkbox" v-model="tag.checked">{{tag.name}}
+                            </label>
+                        </div>
                     </div>
-                    <li v-for="tag in all_tags">
-                        <label for="checkbox">{{tag.name}}
-                            <input type="checkbox" class="checkbox" v-model="tag.checked">
-                        </label>
-
-                        <!--                            <label for="checkbox"> {{tag.name}} {{tag.checked}}</label>-->
-                    </li>
-
                     <!--                    <pre>{{$data | json}}</pre>-->
-                    <button v-on:click="patch_tags" class="btn widget uib_w_48 btn-default d-margins" data-uib="twitter%20bootstrap/button" data-ver="1">Salvar Tags</button>
+                </div>
+                <div class="uib-footer uib-footer-fixed container-group inner-element uib_w_48 zero_pad" data-uib="layout/footer" data-ver="0">
+                    <h2></h2>
+                    <div class="widget-container wrapping-col single-centered"></div>
+                    <div class="widget-container wrapping-col single-centered">
+                        <div class="btn-group uib-bs-flex widget uib_w_38 d-margins" data-uib="twitter%20bootstrap/button_group" data-ver="1">
+                            <button class="btn widget uib_w_40 btn-xs btn-success" data-uib="twitter%20bootstrap/button" data-ver="1" id="btn_feed"><i class="glyphicon glyphicon-home button-icon-top" data-position="top"></i>Noticias</button>
+                            <button v-on:click="patch_tags" class="btn widget uib_w_41 btn-xs btn-success" data-uib="twitter%20bootstrap/button" data-ver="1" id="btn_config"><i class="glyphicon glyphicon-ok button-icon-top" data-position="top"></i>Salvar Tags</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

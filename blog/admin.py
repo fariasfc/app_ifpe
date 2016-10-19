@@ -2,17 +2,19 @@ from django.contrib import admin
 
 # Register your models here.
 from django import forms
+from push_notifications.models import GCMDevice
+
 from blog.models import Post, Tag, Profile
 
 
 class PostForm(forms.ModelForm):
     body = forms.CharField(widget=forms.Textarea)
     # publishing_date = forms.CharField(widget = forms.(attrs={'readonly':'readonly'}))
-    author = forms.ChoiceField(widget = forms.TextInput(attrs={'disabled':'true'}))
+    # author = forms.ChoiceField(widget = forms.TextInput(attrs={'disabled':'true'}))
 
     class Meta:
         model=Post
-        fields = ('title', 'body', 'tags', 'author')
+        fields = ('title', 'body', 'tags')
 
 
 
