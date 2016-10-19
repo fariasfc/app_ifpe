@@ -15,7 +15,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('tags', 'notification_id')
+        fields = ('tags', 'device')
 
 
 class TagsSerializer(serializers.ModelSerializer):

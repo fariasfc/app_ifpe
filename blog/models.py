@@ -5,6 +5,7 @@ from django.db import models
 from django.db.models.fields.related import ManyToManyField
 from django.db.models.signals import post_save
 from django.dispatch.dispatcher import receiver
+from push_notifications.models import GCMDevice
 from taggit.managers import TaggableManager
 from taggit.models import Tag
 
@@ -33,11 +34,18 @@ class Post(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     tags = ManyToManyField(Tag)
-    notification_id = models.CharField(max_length=50)
+    device = models.ForeignKey(GCMDevice, on_delete=models.CASCADE, null=True)
     def __str__(self):
         tags = self.tags.select_related()
         return self.user.username \
                + " - tags: " + str([str(tag) for tag in tags])
+
+@receiver(post_save, sender=GCMDevice)
+def attatch_gcm_device(sender, instance, created, **kwargs):
+    if created:
+        p = Profile.objects.get(user__exact=instance.user)
+        p.device = instance
+        p.save()
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
