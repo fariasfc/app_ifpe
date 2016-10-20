@@ -138,23 +138,4 @@ app.hideSplashScreen = function() {
     }
 
     app.consoleLog(fName, "exit") ;
-    
-    console.log("Initializing PushNotification...");
-    var push = PushNotification.init({ "android": {"senderID": "154417747729"}} );
-    console.log("PushNotification initialized!");
-    push.on('registration', function(data) {
-        console.log("entrou no Registration...");
-        console.log(data.registrationId);
-        alert(data.registrationId);
-        console.log(JSON.stringify(data));
-        console.log("Ja alertou no Registration");
-    });
-
-    push.on('notification', function(data) {
-       alert(data.message);
-    });
-
-    push.on('error', function(e) {
-       alert(e.message);
-    });
 } ;

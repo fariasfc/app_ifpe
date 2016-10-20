@@ -1,11 +1,12 @@
 from django.contrib.auth.models import User
-from django.db import models
+from django.db import models, transaction
 
 # Create your models here.
 from django.db.models.fields.related import ManyToManyField
 from django.db.models.signals import post_save
 from django.dispatch.dispatcher import receiver
 from push_notifications.models import GCMDevice
+
 from taggit.managers import TaggableManager
 from taggit.models import Tag
 
@@ -31,10 +32,15 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+
+def default_tags_ids():
+    return [t.pk for t in Tag.objects.all()]
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    tags = ManyToManyField(Tag)
-    device = models.ForeignKey(GCMDevice, on_delete=models.CASCADE, null=True)
+    tags = ManyToManyField(Tag, default=default_tags_ids)
+    device = models.ForeignKey(GCMDevice, null=True, blank=True, on_delete=models.SET_NULL)
+
     def __str__(self):
         tags = self.tags.select_related()
         return self.user.username \
@@ -50,7 +56,9 @@ def attatch_gcm_device(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        Profile.objects.create(user=instance)
+        p = Profile.objects.create(user=instance)
+        p.tags = [t.pk for t in Tag.objects.all()]
+
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):

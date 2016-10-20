@@ -6,7 +6,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "jsapp/template-blank-cordova-ad-project/sample.zip",
       "projectGuid": "e5cc779b-5adf-4141-9836-dff60461b9a9",
-      "lastModifiedDate": 1476879566120,
+      "lastModifiedDate": 1476898420894,
       "creationDate": 1472679806533
     },
     "XDK-app-designer": "true",
@@ -56,25 +56,6 @@
         "dependedBy": []
       },
       {
-        "id": "cordova-google-play-services",
-        "name": "Google Play Services for Android",
-        "version": "25.0.0",
-        "originType": "cordova.io",
-        "origin": "cordova-google-play-services",
-        "gitref": "",
-        "paramvals": {},
-        "sourceLocation": "plugins/cordova-google-play-services",
-        "selectedState": "Included",
-        "checksum": "ca73dd4d",
-        "dependsOn": [],
-        "topLevel": true,
-        "cordovaVersion": ">=3.0.0",
-        "permissions": {},
-        "data": {},
-        "dependedBy": [],
-        "custom": "true"
-      },
-      {
         "id": "cordova-plugin-device",
         "name": "Device",
         "version": "1.1.0",
@@ -87,7 +68,6 @@
         "checksum": "1eae5d64",
         "dependsOn": [],
         "topLevel": true,
-        "cordovaVersion": ">=3.0.0",
         "permissions": {},
         "description": "Cordova Device Plugin",
         "data": {},
