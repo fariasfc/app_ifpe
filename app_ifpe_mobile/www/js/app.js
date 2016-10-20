@@ -20,15 +20,15 @@ document.addEventListener("deviceready", onDeviceReady, false);
 //*********** NOTIFICATIONS ***********//
 
 var tokenID = "";
-
 function startNotifications(){
-    console.log("Initializing PushNotification...");
+    alert("Initializing PushNotification...");
     var push = PushNotification.init({ "android": {"senderID": "154417747729"}} );
-    console.log("PushNotification initialized!");
+    alert("PushNotification initialized!");
     push.on('registration', function(data) {
         console.log("entrou no Registration...");
         console.log(data.registrationId);
-        tokenID = data.registrationId;
+        // tokenID = data.registrationId;
+        localStorage.setItem('registration_id', data.registrationId);
         alert(data.registrationId);
         console.log(JSON.stringify(data));
         console.log("Ja alertou no Registration");
@@ -47,6 +47,7 @@ function startNotifications(){
 //*********** END NOTIFICATIONS ***********//
 
 function onDeviceReady() {
+    startNotifications();
     // startOneSignal();
     //
     //    <template id="boxes-template">
@@ -93,17 +94,25 @@ function onDeviceReady() {
 
 
             create_device_notification_id: function() {
-                var data_gcm = {
-                    "name": String(device.uuid),
-                    "registration_id": tokenID,
-                    // "device_id": "",
-                    "active": true
-                }
-                // alert(JSON.stringify(data_gcm));
-                r = this.ajax_send('POST', 'device/gcm/', data_gcm);
-                if(r.success){
-                    console.log("Criou Device para Notificacao");
-                    this.load_profile();
+                var r = {
+                    "success":false,
+                    "result": null
+                };
+                var reg_id = localStorage.getItem('registration_id');
+
+                if(reg_id){
+                    var data_gcm = {
+                        "name": String(device.uuid),
+                        "registration_id": reg_id,
+                        // "device_id": "",
+                        "active": true
+                    }
+                    // alert(JSON.stringify(data_gcm));
+                    r = this.ajax_send('POST', 'device/gcm/', data_gcm);
+                    if(r.success){
+                        console.log("Criou Device para Notificacao");
+                        this.load_profile();
+                    }
                 }
             },
             read_post: function(i) {
@@ -144,13 +153,14 @@ function onDeviceReady() {
 
 
             load_profile: function() {
+                alert("loadprofile!");
                 r = this.ajax_get('profile/' + this.username + '/');
                 if(r.success){
                     profile = r.result;
-
+                    alert(JSON.stringify(profile));
                     if(profile.device == null){
                         this.create_device_notification_id();
-                    } else if(profile.device.registration_id != tokenID){
+                    } else if(profile.device.registration_id != localStorage.getItem('registration_id')){
                         this.ajax_send('DELETE', 'device/gcm/' + profile.device.device_id);
                         r = this.create_device_notification_id();
                     } else {
@@ -305,8 +315,10 @@ function onDeviceReady() {
 
         },
         ready: function() {
-            console.log("ready function")
-            startNotifications();
+            // console.log("ready function")
+            // alert("vai startar notificacao");
+            // startNotifications();
+            // alert("startou notificacao");
             var login_success = this.login();
         }
     })
