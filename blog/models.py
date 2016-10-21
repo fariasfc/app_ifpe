@@ -3,7 +3,7 @@ from django.db import models, transaction
 
 # Create your models here.
 from django.db.models.fields.related import ManyToManyField
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, m2m_changed
 from django.dispatch.dispatcher import receiver
 from push_notifications.models import GCMDevice
 
@@ -29,8 +29,24 @@ class Post(models.Model):
     tags = ManyToManyField(Tag)
     slug = models.SlugField()
 
+    class Meta:
+        ordering=['-publishing_date']
+
     def __str__(self):
-        return self.title
+        return "{} - {}".format(self.title, self.tags)
+
+
+@receiver(m2m_changed, sender=Post.tags.through)
+def send_notifications(sender, instance, action, pk_set, **kwargs):
+    if action == 'post_add':
+        #pk_set has all thhe PKs of the tags added to the Post
+        gcm_devices = GCMDevice.objects.filter(user__profile__tags__id__in=pk_set).distinct()
+        gcm_devices.send_message(message=instance.body,extra={'title':instance.title, 'author': instance.author.username})
+        print("Sent Notification!")
+        # GCMDevice.objects.filter(user__profile__tags__in=[Tag.objects.all()[0]])
+#         GCMDevice.objects.filter() instance.tags
+#         GCMDevice.objects.all().send_message(message="Corpo da mensagem gigante lalala vai aparecer onde testando?",
+#                                              extra={'title': 'título'})
 
 
 def default_tags_ids():

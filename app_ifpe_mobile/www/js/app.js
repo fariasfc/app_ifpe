@@ -35,7 +35,13 @@ function startNotifications(){
     });
 
     push.on('notification', function(data) {
-       alert(data.message);
+        alert(data.message);
+        navigator.notification.alert(
+             data.message,         // message
+             null,                 // callback
+             data.title,           // title
+             'Ok'                  // buttonName
+         );
     });
 
     push.on('error', function(e) {
@@ -68,7 +74,7 @@ function onDeviceReady() {
     var vm = new Vue({
         el: "#app_ifpe",
         data: {
-            url: 'http://192.168.25.216:8888/',
+            url: 'http://192.168.25.14:8888/',
             post_index: 0,
             token: '',
             posts: [],

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_auth',
     'corsheaders',
     "push_notifications",
+    'django_extensions',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -150,4 +151,10 @@ PUSH_NOTIFICATIONS_SETTINGS = {
         "APNS_CERTIFICATE": "/path/to/your/certificate.pem",
         "WNS_PACKAGE_SECURITY_ID": "[your package security id, e.g: 'ms-app://e-3-4-6234...']",
         "WNS_SECRET_KEY": "[your app secret key, e.g.: 'KDiejnLKDUWodsjmewuSZkk']",
+}
+
+
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
 }
