@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status, viewsets, filters, permissions
 from rest_framework.decorators import api_view
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
@@ -86,6 +86,7 @@ def get_posts_by_tags(request):
             Response("Malformed data!")
         return Response("Erro!")
 
+
 class ProfileViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated, )
 
@@ -115,7 +116,7 @@ class PostViewSet(viewsets.ReadOnlyModelViewSet):
     '''
     Este ViewSet automaticamente prove 'list' e 'detail'
     '''
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     queryset = Post.objects.all()
     serializer_class = PostSerializer
@@ -123,7 +124,11 @@ class PostViewSet(viewsets.ReadOnlyModelViewSet):
 
     #http://127.0.0.1:8888/post/?tags=informatica-basica&tags=redes-de-computadores
     def get_queryset(self):
-        posts = Post.objects.filter(tags__in=self.request.user.profile.tags.select_related()).distinct()
+        if self.request.user.is_anonymous():
+            tags=[Tag.objects.get(name__exact="geral")]
+        else:
+            tags=self.request.user.profile.tags.select_related()
+        posts = Post.objects.filter(tags__in=tags).distinct()
         return posts
 
 class TagViewSet(viewsets.ReadOnlyModelViewSet):

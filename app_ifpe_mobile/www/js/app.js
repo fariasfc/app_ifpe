@@ -75,6 +75,7 @@ function onDeviceReady() {
         el: "#app_ifpe",
         data: {
             url: 'http://192.168.25.14:8888/',
+            user_logged: false,
             post_index: 0,
             token: '',
             posts: [],
@@ -139,6 +140,7 @@ function onDeviceReady() {
                         if(r.success){
                             token = r.result['key'];
                             if(token){
+                                this.user_logged = true;
                                 this.save_local('token', r.result['key']);
                                 this.save_local('username', this.login_credentials.username);
                                 console.log("Login Success!");
@@ -153,6 +155,7 @@ function onDeviceReady() {
 
             logout: function(){
                 localStorage.clear();
+                this.user_logged = false;
                 activate_page("#login");
 //                return false;
             },
