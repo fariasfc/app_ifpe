@@ -149,7 +149,10 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.BasicAuthentication',
         # 'rest_framework.authentication.SessionAuthentication',
     ),
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 10,
+
+    'DATETIME_FORMAT': "%d-%m-%Y   %H:%M",
+
 }
 
 CORS_ORIGIN_ALLOW_ALL = True

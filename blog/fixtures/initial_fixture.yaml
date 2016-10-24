@@ -1,0 +1,19 @@
+- model: app_ifpe.tag
+  pk: 1
+  fields:
+    name: geral
+
+  - model: app_ifpe.tag
+  pk: 2
+  fields:
+    name: informatica-basica
+
+  - model: app_ifpe.tag
+  pk: 3
+  fields:
+    name: redes-de-computadores
+
+  - model: app_ifpe.tag
+  pk: 4
+  fields:
+    name: matematica-financeira

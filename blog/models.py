@@ -53,7 +53,7 @@ def default_tags_ids():
     return [t.pk for t in Tag.objects.all()]
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
     tags = ManyToManyField(Tag, default=default_tags_ids)
     device = models.ForeignKey(GCMDevice, null=True, blank=True, on_delete=models.SET_NULL)
 

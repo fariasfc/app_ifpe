@@ -21,16 +21,16 @@ document.addEventListener("deviceready", onDeviceReady, false);
 
 var tokenID = "";
 function startNotifications(){
-    alert("Initializing PushNotification...");
+    // alert("Initializing PushNotification...");
     var push = PushNotification.init({ "android": {"senderID": "154417747729"}} );
-    alert("PushNotification initialized!");
+    // alert("PushNotification initialized!");
     push.on('registration', function(data) {
-        console.log("entrou no Registration...");
-        console.log(data.registrationId);
+        // console.log("entrou no Registration...");
+        // console.log(data.registrationId);
         // tokenID = data.registrationId;
-        localStorage.setItem('registration_id', data.registrationId);
-        alert(data.registrationId);
+        // alert(data.registrationId);
         console.log(JSON.stringify(data));
+        localStorage.setItem('registration_id', data.registrationId);
         console.log("Ja alertou no Registration");
     });
 
@@ -53,7 +53,6 @@ function startNotifications(){
 //*********** END NOTIFICATIONS ***********//
 
 function onDeviceReady() {
-    startNotifications();
     // startOneSignal();
     //
     //    <template id="boxes-template">
@@ -74,7 +73,8 @@ function onDeviceReady() {
     var vm = new Vue({
         el: "#app_ifpe",
         data: {
-            url: 'http://192.168.25.14:8888/',
+            // url: 'http://64.137.211.106/',
+            url: 'http://192.168.25.216:8888/',
             user_logged: false,
             post_index: 0,
             token: '',
@@ -90,13 +90,15 @@ function onDeviceReady() {
         },
         methods: {
             sync: function() {
-                r = this.ajax_get('post/');
+                if(this.user_logged){
+                    r = this.ajax_get('post/');
+                } else {
+                    r = this.ajax_get_no_auth('post/');
+                }
+
                 if(r.success){
                     this.save_local('posts', JSON.stringify(r.result.results));
                 }
-
-
-
             },
 
 
@@ -162,11 +164,11 @@ function onDeviceReady() {
 
 
             load_profile: function() {
-                alert("loadprofile!");
+                // alert("loadprofile!");
                 r = this.ajax_get('profile/' + this.username + '/');
-                if(r.success){
+                if(r.success && this.token){
                     profile = r.result;
-                    alert(JSON.stringify(profile));
+                    // alert(JSON.stringify(profile));
                     if(profile.device == null){
                         this.create_device_notification_id();
                     } else if(profile.device.registration_id != localStorage.getItem('registration_id')){
@@ -262,6 +264,32 @@ function onDeviceReady() {
                 return ret;
             },
 
+            ajax_get_no_auth: function(url_suffix){
+                self = this;
+                ret = {
+                    "success": false,
+                    "result": null
+                };
+                $.ajax({
+                    dataType: 'json',
+                    url: self.url + url_suffix,
+                    async: false,
+                    contentType: "application/json",
+                    type: 'GET',
+                    success: function(data) {
+                        ret.success = true;
+                        ret.result = data;
+                    },
+                    error: function(data) {
+                        ret.success = false;
+                        ret.result = data;
+                        alert(JSON.stringify(data));
+                    }
+                });
+
+                return ret;
+            },
+
             ajax_send: function(method, url_suffix, json_data){
                 self = this;
                 ret = {
@@ -324,11 +352,18 @@ function onDeviceReady() {
 
         },
         ready: function() {
+            startNotifications();
             // console.log("ready function")
             // alert("vai startar notificacao");
             // startNotifications();
             // alert("startou notificacao");
-            var login_success = this.login();
+//            var login_success = this.login();
+            this.load_local_storage();
+            if (this.token){
+                this.load_profile();
+            }
+            this.sync();
+            activate_page("#main");
         }
     })
 }

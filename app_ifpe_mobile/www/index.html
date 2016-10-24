@@ -121,9 +121,9 @@
                     <div class="widget-container wrapping-col single-centered">
                         <div class="btn-group uib-bs-flex widget uib_w_38 fill" data-uib="twitter%20bootstrap/button_group" data-ver="1">
                             <button v-on:click="sync" class="btn widget uib_w_40 btn-xs btn-success" data-uib="twitter%20bootstrap/button" data-ver="1" id="btn_feed"><i class="glyphicon glyphicon-home button-icon-top" data-position="top"></i>Noticias</button>
-                            <button v-on:click="prepare_adjustments" class="btn widget uib_w_41 btn-xs btn-success" data-uib="twitter%20bootstrap/button" data-ver="1" id="btn_config"><i class="glyphicon glyphicon-cog button-icon-top" data-position="top"></i>Ajustes</button>
+                            <button v-show="user_logged" v-on:click="prepare_adjustments" class="btn widget uib_w_41 btn-xs btn-success" data-uib="twitter%20bootstrap/button" data-ver="1" id="btn_config"><i class="glyphicon glyphicon-cog button-icon-top" data-position="top"></i>Ajustes</button>
                             <button v-if="user_logged" v-on:click="logout" class="btn widget btn-xs btn-success" id="btn_logout"><i class="glyphicon glyphicon-off button-icon-top" data-position="top"></i>Logout</button>
-                            <button v-else v-on:click="logout" class="btn widget btn-xs btn-success" id="btn_logout"><i class="glyphicon glyphicon-off button-icon-top" data-position="top"></i>Logout</button>
+                            <button v-else v-on:click="logout" class="btn widget btn-xs btn-success" id="btn_logout"><i class="glyphicon glyphicon-off button-icon-top" data-position="top"></i>Login</button>
                         </div>
                     </div>
                     <div class="widget-container content-area horiz-area wrapping-col left"></div>
