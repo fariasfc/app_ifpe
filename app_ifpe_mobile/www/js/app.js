@@ -73,8 +73,8 @@ function onDeviceReady() {
     var vm = new Vue({
         el: "#app_ifpe",
         data: {
-            // url: 'http://64.137.211.106/',
-            url: 'http://192.168.25.216:8888/',
+            url: 'http://64.137.211.106/',
+            // url: 'http://192.168.25.216:8888/',
             user_logged: false,
             post_index: 0,
             token: '',
@@ -90,6 +90,7 @@ function onDeviceReady() {
         },
         methods: {
             sync: function() {
+                alert("sync");
                 if(this.user_logged){
                     r = this.ajax_get('post/');
                 } else {
@@ -148,6 +149,8 @@ function onDeviceReady() {
                                 console.log("Login Success!");
                                 this.load_profile();
                                 this.login();
+                            } else {
+                                alert("Login ou senha incorretos.");
                             }
                         }
                     }
@@ -164,7 +167,7 @@ function onDeviceReady() {
 
 
             load_profile: function() {
-                // alert("loadprofile!");
+                alert("loadprofile!");
                 r = this.ajax_get('profile/' + this.username + '/');
                 if(r.success && this.token){
                     profile = r.result;
