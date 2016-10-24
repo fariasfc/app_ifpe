@@ -25,6 +25,13 @@ class PostAdmin(admin.ModelAdmin):
     # def author_username(self, obj):
     #     return obj.author.username
 
+    def get_queryset(self, request):
+        qs = super(PostAdmin, self).get_queryset(request)
+        if(request.user.is_superuser):
+            return qs
+        else:
+            return qs.filter(author=request.user)
+
     def save_model(self, request, obj, form, change):
         obj.author = request.user
         obj.save()

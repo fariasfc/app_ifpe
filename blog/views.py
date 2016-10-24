@@ -12,6 +12,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 
 from blog.models import Post, Profile, Tag
+from blog.permissions import IsOwnerOrReadOnly
 from blog.serializers import PostSerializer, ProfileSerializer, TagsSerializer
 import json
 from django.core import serializers
@@ -116,7 +117,7 @@ class PostViewSet(viewsets.ReadOnlyModelViewSet):
     '''
     Este ViewSet automaticamente prove 'list' e 'detail'
     '''
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
 
     queryset = Post.objects.all()
     serializer_class = PostSerializer

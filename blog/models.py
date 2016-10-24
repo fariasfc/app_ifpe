@@ -33,7 +33,7 @@ class Post(models.Model):
         ordering=['-publishing_date']
 
     def __str__(self):
-        return "{} - {}".format(self.title, [t.name for t in self.tags.all()])
+        return "username: {}  |  title: {}   |   tags: {}  |  body: {}".format(self.author.username, self.title, [t.name for t in self.tags.all()], self.body)
 
 
 @receiver(m2m_changed, sender=Post.tags.through)
