@@ -30,7 +30,8 @@ function startNotifications(){
         // tokenID = data.registrationId;
         // alert(data.registrationId);
         console.log(JSON.stringify(data));
-        localStorage.setItem('registration_id', data.registrationId);
+        var regId = data.registrationId;
+        localStorage.setItem('registration_id', regId);
         console.log("Ja alertou no Registration");
     });
 
@@ -53,6 +54,8 @@ function startNotifications(){
 //*********** END NOTIFICATIONS ***********//
 
 function onDeviceReady() {
+    startNotifications();
+
     // startOneSignal();
     //
     //    <template id="boxes-template">
@@ -355,7 +358,7 @@ function onDeviceReady() {
 
         },
         ready: function() {
-            startNotifications();
+            // startNotifications();
             // console.log("ready function")
             // alert("vai startar notificacao");
             // startNotifications();
